@@ -1,0 +1,24 @@
+# --- Секреты (НИКОГДА не коммитим) ---
+.mcp.json
+local-setup/mcp.windows.json
+.netrc
+*.token
+_lib/config.php
+
+# --- Тяжёлое сырьё / служебное ---
+incoming/
+.playwright-mcp/
+node_modules/
+__pycache__/
+*.pyc
+
+# --- Деплой/бэкап-мусор ---
+backup-prod-*/
+*.bak
+send.php.bak
+
+# --- ОС/редактор ---
+.DS_Store
+Thumbs.db
+.vscode/
+*.log

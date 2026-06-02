@@ -1,0 +1,9 @@
+{
+  "allowedTools": [
+    "Bash", "Read", "Edit", "Write", "Glob", "Grep", "Agent",
+    "WebSearch", "WebFetch"
+  ],
+  "permissionMode": "dontAsk",
+  "maxTurns": 30,
+  "timeoutMs": 600000
+}

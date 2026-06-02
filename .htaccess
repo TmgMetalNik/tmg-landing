@@ -1,0 +1,43 @@
+RewriteEngine On
+
+# 1. http → https (301 permanent, для SEO)
+RewriteCond %{SERVER_PORT} !^443$
+RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
+
+# 2. www → без www (канонический хост)
+RewriteCond %{HTTP_HOST} ^www\.theosmg\.ru$ [NC]
+RewriteRule ^(.*)$ https://theosmg.ru/$1 [R=301,L]
+
+# 3. Кэш статики (favicon, шрифты, картинки, видео) на 30 дней
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/x-icon "access plus 30 days"
+    ExpiresByType image/png "access plus 30 days"
+    ExpiresByType image/svg+xml "access plus 30 days"
+    ExpiresByType image/webp "access plus 30 days"
+    ExpiresByType video/mp4 "access plus 30 days"
+    ExpiresByType font/woff2 "access plus 30 days"
+    ExpiresByType text/css "access plus 7 days"
+    ExpiresByType application/javascript "access plus 7 days"
+</IfModule>
+
+# 4. Сжатие текстовых ресурсов
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml application/xml
+</IfModule>
+
+# 5. Security headers
+<IfModule mod_headers.c>
+    # Браузер запоминает, что сайт только по HTTPS — защита от downgrade-MITM на 1 год
+    Header always set Strict-Transport-Security "max-age=31536000"
+    # Запрет встраивать сайт в <iframe> на чужих доменах — clickjacking.
+    # frame-ancestors разрешает только наш домен + Я.Метрику (для карт кликов / Webvisor).
+    # CSP frame-ancestors заменяет устаревший X-Frame-Options и поддерживает whitelist.
+    Header always set Content-Security-Policy "frame-ancestors 'self' https://metrika.yandex.ru https://*.metrika.yandex.ru https://webvisor.com https://*.webvisor.com"
+    # Запрет MIME-sniffing — браузер использует заявленный Content-Type
+    Header always set X-Content-Type-Options "nosniff"
+    # Минимизация утечки реферера на внешние сайты
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    # Отключаем мощные API, которые сайту не нужны
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /_lib/
+Disallow: /send.php
+Disallow: /_uploads/
+
+Sitemap: https://theosmg.ru/sitemap.xml
+Host: https://theosmg.ru

@@ -1,0 +1,10 @@
+# Закрыть прямой HTTP-доступ ко всему содержимому _lib/
+<RequireAll>
+    Require all denied
+</RequireAll>
+
+# Fallback для Apache 2.2
+<IfModule !mod_authz_core.c>
+    Order deny,allow
+    Deny from all
+</IfModule>
