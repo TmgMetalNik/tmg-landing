@@ -4,6 +4,7 @@ local-setup/mcp.windows.json
 .netrc
 *.token
 _lib/config.php
+deploy-creds.txt
 
 # --- Тяжёлое сырьё / служебное ---
 incoming/
